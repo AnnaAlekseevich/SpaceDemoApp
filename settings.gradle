@@ -1,0 +1,2 @@
+rootProject.name = "SpaceDemoApp"
+include ':app'
