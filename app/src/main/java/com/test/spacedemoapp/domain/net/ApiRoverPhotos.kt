@@ -10,7 +10,7 @@ interface ApiRoverPhotos {
     @GET("api/v1/rovers/curiosity/photos")
     fun getPhotos(
         @Query("earth_date") earth_date: String,
-        @Query("camera") camera: String,
+        //@Query("camera") camera: String,
         @Query("page") page: Int,
         @Query("api_key") apiKey: String
     ): Single<PhotoResponse>

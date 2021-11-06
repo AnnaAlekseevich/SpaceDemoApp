@@ -11,11 +11,11 @@ class RemoteRoverPhotosDataStoreImpl
 @Inject constructor(private val apiRoverPhotos: ApiRoverPhotos) : RemoteRoverPhotosDataStore {
     override fun getPhotos(
         earthDate: String,
-        camera: String,
+        //camera: String,
         page: Int,
         apiKey: String
     ): Single<List<RoverPhoto>> {
-        return apiRoverPhotos.getPhotos(earthDate, camera, page, apiKey)
+        return apiRoverPhotos.getPhotos(earthDate, page, apiKey)
             .map { response -> response.photos }
             .subscribeOn(Schedulers.io())
     }

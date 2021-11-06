@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.util.Log
 import androidx.paging.PagingData
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.test.spacedemoapp.R
 import com.test.spacedemoapp.SpaceDemoApp
 import com.test.spacedemoapp.data.common.repositories.RemoteRoverPhotosDataStore
 import com.test.spacedemoapp.databinding.ActivityMainBinding
@@ -40,7 +39,7 @@ class MainActivity : MvpAppCompatActivity(), MainActivityView {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         binding.photosRecyclerView.layoutManager = LinearLayoutManager(this)
-        setContentView(R.layout.activity_main)
+        setContentView(binding.root)
 
         setupPhotoList()
     }
@@ -69,6 +68,7 @@ class MainActivity : MvpAppCompatActivity(), MainActivityView {
     override fun setPagingData(pagingData: PagingData<RoverPhoto>) {
         Log.d("AdapterData", "activity pagingData = ${pagingData}")
         photoListAdapter.submitData(lifecycle, pagingData)
+        photoListAdapter.notifyDataSetChanged()
     }
 
 

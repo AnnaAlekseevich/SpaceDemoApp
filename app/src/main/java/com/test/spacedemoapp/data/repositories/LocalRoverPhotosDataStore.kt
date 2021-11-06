@@ -1,12 +1,11 @@
-package com.test.spacedemoapp.data.common.repositories
+package com.test.spacedemoapp.data.repositories
 
 import com.test.spacedemoapp.domain.models.RoverPhoto
 import io.reactivex.Single
 
-interface RemoteRoverPhotosDataStore {
+interface LocalRoverPhotosDataStore {
     fun getPhotos(
         earthDate: String,
-        //camera: String,
         page: Int,
         apiKey: String
     ): Single<List<RoverPhoto>>

@@ -1,5 +1,6 @@
 package com.test.spacedemoapp.data.repositories
 
+import android.util.Log
 import androidx.paging.PagingState
 import androidx.paging.rxjava2.RxPagingSource
 import com.test.spacedemoapp.data.common.repositories.RemoteRoverPhotosDataStore
@@ -19,8 +20,7 @@ class GetPhotosRxPagingSource @Inject constructor(
         var currentLoadingPageKey = params.key ?: 1
 
         return remoteRoverPhotosDataStore.getPhotos(
-            earthDate = "2021-10-10",
-            camera = "fhaz",
+            earthDate = "2021-10-30",
             page = currentLoadingPageKey,
             apiKey = "DEMO_KEY"
         )
@@ -34,7 +34,7 @@ class GetPhotosRxPagingSource @Inject constructor(
         currentLoadingPageKey: Int
     ): LoadResult<Int, RoverPhoto> {
         val prevKey = if (currentLoadingPageKey == 1) null else currentLoadingPageKey - 1
-
+        Log.d("AdapterData", "data LOAD = ${data}")
         return LoadResult.Page(
             data = data,
             prevKey = prevKey,

@@ -6,6 +6,7 @@ import androidx.paging.PagingConfig
 import androidx.paging.rxjava2.observable
 import com.test.spacedemoapp.data.common.repositories.RemoteRoverPhotosDataStore
 import com.test.spacedemoapp.data.repositories.GetPhotosRxPagingSource
+import io.reactivex.android.schedulers.AndroidSchedulers
 import moxy.InjectViewState
 import moxy.MvpPresenter
 import retrofit2.HttpException
@@ -23,11 +24,12 @@ class MainActivityPresenter @Inject constructor(private val remoteRoverPhotosDat
     override fun attachView(view: MainActivityView?) {
         super.attachView(view)
         Log.d("AdapterData", "attachView")
-        Pager(PagingConfig(pageSize = 20)) {
+        Pager(PagingConfig(pageSize = 25)) {
             GetPhotosRxPagingSource(remoteRoverPhotosDataStore)
-        }.observable.subscribe { pagingData ->  //set it to view
+        }.observable.observeOn(AndroidSchedulers.mainThread())
+            .subscribe { pagingData ->  //set it to view
+            Log.d("AdapterData", "pagingData = ${pagingData}")
             viewState.setPagingData(pagingData)
-            Log.d("AdapterData", "pagingData = $pagingData")
         }
     }
 
