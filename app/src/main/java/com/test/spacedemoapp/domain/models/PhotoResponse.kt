@@ -2,10 +2,10 @@ package com.test.spacedemoapp.domain.models
 
 import com.google.gson.annotations.SerializedName
 
-data class Photos(
+data class PhotoResponse(
 
 //list Photos
 @SerializedName("photos")
-var photos: List<RoverPhotos>
+var photos: List<RoverPhoto>
 
 )

@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">SpaceDemoApp</string>
+    <string name="title">Curiosity</string>
+    <string name="title_description">Front Hazard Avoidance Camera</string>
+    <string name="show_image">SHOW IMAGE</string>
+    <string name="tab_main">Main</string>
+    <string name="tab_map">Map</string>
 </resources>

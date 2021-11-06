@@ -5,12 +5,12 @@ import android.graphics.drawable.AnimatedVectorDrawable
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
-import androidx.appcompat.app.AppCompatActivity
 import com.test.spacedemoapp.R
 import com.test.spacedemoapp.databinding.ActivitySplashBinding
 import com.test.spacedemoapp.ui.main.MainActivity
+import moxy.MvpAppCompatActivity
 
-class SplashActivity: AppCompatActivity(), SplashActivityView {
+class SplashActivity : MvpAppCompatActivity(), SplashActivityView {
 
     private lateinit var binding: ActivitySplashBinding
     private lateinit var rocketAnimation: AnimatedVectorDrawable
