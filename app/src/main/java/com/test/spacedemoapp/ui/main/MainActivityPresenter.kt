@@ -17,25 +17,17 @@ import javax.inject.Inject
 class MainActivityPresenter @Inject constructor(private val remoteRoverPhotosDataStore: RemoteRoverPhotosDataStore) :
     MvpPresenter<MainActivityView>() {
 
-    init {
-        Log.d("AdapterData", "getPhotos Main presenter")
-    }
-
     override fun attachView(view: MainActivityView?) {
         super.attachView(view)
-        Log.d("AdapterData", "attachView")
         Pager(PagingConfig(pageSize = 25)) {
             GetPhotosRxPagingSource(remoteRoverPhotosDataStore)
         }.observable.observeOn(AndroidSchedulers.mainThread())
             .subscribe { pagingData ->  //set it to view
-            Log.d("AdapterData", "pagingData = ${pagingData}")
             viewState.setPagingData(pagingData)
         }
     }
 
     private fun showException(throwable: Throwable?) {
-        Log.d("Retrofit", "error = $throwable")
-        Log.d("AdapterData", "errorMessage + $throwable")
         val error = throwable as? HttpException
         try {
             viewState.showException(errorMessage = error?.message() ?: "")

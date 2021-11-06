@@ -51,7 +51,7 @@ class RoverPhotosListAdapter(
             Log.d("AdapterData", "updatePhotoItem")
             binding.photo.setImageURI(roverPhoto.urlItemPhoto.toUri())
             binding.titleText.text = roverPhoto.rover.name
-            binding.titleTextDescription.text = roverPhoto.camera.fullCameraName
+            binding.titleTextDescription.text = roverPhoto.roverCamera.fullName
             roverPhoto.urlItemPhoto?.toUri()?.let {
                 Glide
                     .with(binding.photo.context)

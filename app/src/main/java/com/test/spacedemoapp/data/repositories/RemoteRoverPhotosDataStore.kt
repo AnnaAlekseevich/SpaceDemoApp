@@ -6,7 +6,6 @@ import io.reactivex.Single
 interface RemoteRoverPhotosDataStore {
     fun getPhotos(
         earthDate: String,
-        //camera: String,
         page: Int,
         apiKey: String
     ): Single<List<RoverPhoto>>

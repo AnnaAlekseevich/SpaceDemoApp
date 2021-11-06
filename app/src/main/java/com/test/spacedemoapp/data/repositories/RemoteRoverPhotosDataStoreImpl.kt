@@ -11,7 +11,6 @@ class RemoteRoverPhotosDataStoreImpl
 @Inject constructor(private val apiRoverPhotos: ApiRoverPhotos) : RemoteRoverPhotosDataStore {
     override fun getPhotos(
         earthDate: String,
-        //camera: String,
         page: Int,
         apiKey: String
     ): Single<List<RoverPhoto>> {

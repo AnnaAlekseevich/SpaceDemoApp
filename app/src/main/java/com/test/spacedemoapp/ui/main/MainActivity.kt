@@ -30,10 +30,6 @@ class MainActivity : MvpAppCompatActivity(), MainActivityView {
         return MainActivityPresenter(remoteRoverPhotosDataStore)
     }
 
-    init {
-        Log.d("RoverPhotos", "getPhotos Main presenter")
-    }
-
     override fun onCreate(savedInstanceState: Bundle?) {
         SpaceDemoApp.INSTANCE.appComponent.inject(this)
         super.onCreate(savedInstanceState)
@@ -49,7 +45,6 @@ class MainActivity : MvpAppCompatActivity(), MainActivityView {
         binding.photosRecyclerView.apply {
             layoutManager = LinearLayoutManager(context)
             adapter = photoListAdapter
-            Log.d("AdapterData", "photoListAdapter + ${photoListAdapter.itemCount}")
         }
     }
 
@@ -66,7 +61,6 @@ class MainActivity : MvpAppCompatActivity(), MainActivityView {
     }
 
     override fun setPagingData(pagingData: PagingData<RoverPhoto>) {
-        Log.d("AdapterData", "activity pagingData = ${pagingData}")
         photoListAdapter.submitData(lifecycle, pagingData)
         photoListAdapter.notifyDataSetChanged()
     }

@@ -5,11 +5,12 @@ import androidx.room.Insert
 import androidx.room.Query
 import androidx.room.Update
 import com.test.spacedemoapp.domain.models.RoverPhoto
+import io.reactivex.Single
 
 @Dao
 interface RoverPhotoDao {
     @Query("SELECT * FROM roverPhoto")
-    fun getRoverPhoto(): List<RoverPhoto>
+    fun getRoverPhoto(): Single<List<RoverPhoto>>
 
     @Insert
     fun insertRoverPhoto(roverPhotoList: List<RoverPhoto>)
