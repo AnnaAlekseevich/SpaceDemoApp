@@ -2,8 +2,9 @@ package com.test.spacedemoapp.domain.db
 
 import com.test.spacedemoapp.domain.models.RoverPhoto
 import io.reactivex.Single
+import javax.inject.Inject
 
-class DatabaseHelperImpl(private val appDatabase: AppDatabase) : DatabaseHelper {
+class DatabaseHelperImpl @Inject constructor(private val appDatabase: AppDatabase) : DatabaseHelper {
     override fun deleteAll() {
         appDatabase.roverPhotoDao().deleteAll()
     }

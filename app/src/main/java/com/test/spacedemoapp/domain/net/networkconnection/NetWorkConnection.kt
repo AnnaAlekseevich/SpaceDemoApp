@@ -1,0 +1,52 @@
+package com.test.spacedemoapp.domain.net.networkconnection
+
+
+import android.content.Context
+import android.net.ConnectivityManager
+import android.net.NetworkCapabilities
+import android.os.Build
+import androidx.annotation.RequiresApi
+
+class NetWorkConnection {
+    companion object {
+        @RequiresApi(Build.VERSION_CODES.M)
+        fun isInternetAvailable(context: Context): Boolean {
+            var result: Boolean = false
+            val connectivityManager =
+                context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+            val networkCapabilities = connectivityManager.activeNetwork ?: return false
+            val actNw =
+                connectivityManager.getNetworkCapabilities(networkCapabilities) ?: return false
+            result = when {
+                actNw.hasTransport(NetworkCapabilities.TRANSPORT_WIFI) -> true
+                actNw.hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR) -> true
+                actNw.hasTransport(NetworkCapabilities.TRANSPORT_ETHERNET) -> true
+                else -> false
+            }
+            return result
+        }
+    }
+
+//    companion object {
+//        fun isOnline(): Boolean {
+//            var isNetworkConnected = false
+//            var connectivityMgr: ConnectivityManager =
+//                context.getSystemService(Context.CONNECTIVITY_SERVICE);
+//            var allNetworks: Array<Network> =
+//                connectivityMgr.getAllNetworks(); // added in API 21 (Lollipop)
+//
+//            for (network: Network in allNetworks) {
+//                var networkCapabilities: NetworkCapabilities =
+//                    connectivityMgr.getNetworkCapabilities(network);
+//                if (networkCapabilities != null) {
+//                    if (networkCapabilities.hasTransport(NetworkCapabilities.TRANSPORT_WIFI)
+//                        || networkCapabilities.hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR)
+//                        || networkCapabilities.hasTransport(NetworkCapabilities.TRANSPORT_ETHERNET)
+//                    )
+//                        isNetworkConnected = true;
+//                }
+//            }
+//            return isNetworkConnected
+//        }
+//    }
+}

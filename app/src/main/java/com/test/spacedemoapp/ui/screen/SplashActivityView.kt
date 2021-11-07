@@ -6,4 +6,6 @@ import moxy.viewstate.strategy.StateStrategyType
 
 @StateStrategyType(AddToEndSingleStrategy::class)
 interface SplashActivityView: MvpView {
+//    fun checkInternet(): Boolean
+//    fun validateError()
 }
