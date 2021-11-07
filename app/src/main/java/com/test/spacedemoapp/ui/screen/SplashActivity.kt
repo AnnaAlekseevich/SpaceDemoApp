@@ -2,13 +2,18 @@ package com.test.spacedemoapp.ui.screen
 
 import android.content.Intent
 import android.graphics.drawable.AnimatedVectorDrawable
+import android.os.Build
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
+import android.util.Log
+import android.view.View
+import com.google.android.material.snackbar.Snackbar
 import com.test.spacedemoapp.R
 import com.test.spacedemoapp.SpaceDemoApp
-import com.test.spacedemoapp.data.repositories.LocalRoverPhotosDataStore
+import com.test.spacedemoapp.data.repositories.RoverPhotosRepository
 import com.test.spacedemoapp.databinding.ActivitySplashBinding
+import com.test.spacedemoapp.domain.net.networkconnection.NetWorkConnection
 import com.test.spacedemoapp.ui.main.MainActivity
 import kotlinx.android.synthetic.main.activity_main.*
 import moxy.MvpAppCompatActivity
@@ -22,14 +27,14 @@ class SplashActivity : MvpAppCompatActivity(), SplashActivityView {
     private lateinit var rocketAnimation: AnimatedVectorDrawable
 
     @Inject
-    lateinit var localRoverPhotosDataStore: LocalRoverPhotosDataStore
+    lateinit var roverPhotosRepository: RoverPhotosRepository
 
     @InjectPresenter
     lateinit var presenter: SplashActivityPresentor
 
     @ProvidePresenter
     fun provideDetailsPresenter(): SplashActivityPresentor? {
-        return SplashActivityPresentor(localRoverPhotosDataStore)
+        return SplashActivityPresentor(roverPhotosRepository)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -50,17 +55,25 @@ class SplashActivity : MvpAppCompatActivity(), SplashActivityView {
         }, 3000)
     }
 
-//    @SuppressLint("NewApi")
-//    override fun checkInternet(): Boolean {
-//        Log.d("NETWORKCONNEKTION", "Internet's available")
-//        return NetWorkConnection.isInternetAvailable(this@SplashActivity)
-//    }
-//
-//    override fun validateError() {
-//        Snackbar.make(constraintMainActivity, "Please check your internet connection", Snackbar.LENGTH_SHORT)
-//            .setAction("OK", View.OnClickListener { /*Take Action*/ }).show()
-//
-//        Log.d("NETWORKCONNEKTION", "Internet don't available")
-//    }
+    //todo add BroadcastReviser
+    override fun onResume() {
+        super.onResume()
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            presenter.setInternetAvailable(NetWorkConnection.isInternetAvailable(this@SplashActivity))
+        } else {
+            showInternetConnectionError()
+        }
+    }
+
+    override fun showInternetConnectionError() {
+
+        Snackbar.make(
+            findViewById(android.R.id.content),
+            "Please check your internet connection",
+            Snackbar.LENGTH_LONG
+        ).setAction("OK", View.OnClickListener { /*Take Action*/ }).show()
+
+        Log.d("NETWORKCONNEKTION", "Internet don't available")
+    }
 
 }

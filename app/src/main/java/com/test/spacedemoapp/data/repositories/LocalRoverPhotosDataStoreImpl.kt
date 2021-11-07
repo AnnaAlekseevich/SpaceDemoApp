@@ -14,7 +14,5 @@ class LocalRoverPhotosDataStoreImpl @Inject constructor(private val dbHelper: Da
         apiKey: String
     ): Single<List<RoverPhoto>> {
         return dbHelper.getPhotos(earthDate, page, apiKey)
-//            .map { response -> response.photos }
-//            .subscribeOn(Schedulers.io())
     }
 }

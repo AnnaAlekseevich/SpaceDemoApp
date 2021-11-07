@@ -26,27 +26,4 @@ class NetWorkConnection {
             return result
         }
     }
-
-//    companion object {
-//        fun isOnline(): Boolean {
-//            var isNetworkConnected = false
-//            var connectivityMgr: ConnectivityManager =
-//                context.getSystemService(Context.CONNECTIVITY_SERVICE);
-//            var allNetworks: Array<Network> =
-//                connectivityMgr.getAllNetworks(); // added in API 21 (Lollipop)
-//
-//            for (network: Network in allNetworks) {
-//                var networkCapabilities: NetworkCapabilities =
-//                    connectivityMgr.getNetworkCapabilities(network);
-//                if (networkCapabilities != null) {
-//                    if (networkCapabilities.hasTransport(NetworkCapabilities.TRANSPORT_WIFI)
-//                        || networkCapabilities.hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR)
-//                        || networkCapabilities.hasTransport(NetworkCapabilities.TRANSPORT_ETHERNET)
-//                    )
-//                        isNetworkConnected = true;
-//                }
-//            }
-//            return isNetworkConnected
-//        }
-//    }
 }
