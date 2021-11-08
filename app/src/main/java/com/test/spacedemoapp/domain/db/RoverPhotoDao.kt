@@ -1,10 +1,8 @@
 package com.test.spacedemoapp.domain.db
 
-import androidx.room.Dao
-import androidx.room.Insert
-import androidx.room.Query
-import androidx.room.Update
+import androidx.room.*
 import com.test.spacedemoapp.domain.models.RoverPhoto
+import io.reactivex.Completable
 import io.reactivex.Single
 
 @Dao
@@ -13,11 +11,12 @@ interface RoverPhotoDao {
     fun getRoverPhoto(): Single<List<RoverPhoto>>
 
     @Insert
-    fun insertRoverPhoto(roverPhotoList: List<RoverPhoto>)
+    fun insertRoverPhoto(roverPhotoList: List<RoverPhoto>): Completable
 
-    @Update(entity = RoverPhoto::class)
-    fun updateRoverPhoto(roverPhotoList: List<RoverPhoto>)
+    //@Insert(onConflict = OnConflictStrategy.REPLACE)
+//    @Update(entity = RoverPhoto::class)
+//    fun updateRoverPhoto(roverPhotoList: Single<List<RoverPhoto>>): Completable
 
     @Query("DELETE FROM roverPhoto")
-    fun deleteAll()
+    fun deleteAll(): Completable
 }

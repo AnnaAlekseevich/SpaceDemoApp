@@ -68,7 +68,7 @@ class RoverPhotosListAdapter(
 
     }
 }
-
+//for converting String to Uri
 private fun String.toUri(): Uri = Uri.parse(this)
 
 

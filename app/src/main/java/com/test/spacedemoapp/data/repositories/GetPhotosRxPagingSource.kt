@@ -3,7 +3,6 @@ package com.test.spacedemoapp.data.repositories
 import android.util.Log
 import androidx.paging.PagingState
 import androidx.paging.rxjava2.RxPagingSource
-import com.test.spacedemoapp.data.common.repositories.RemoteRoverPhotosDataStore
 import com.test.spacedemoapp.domain.models.RoverPhoto
 import io.reactivex.Single
 import io.reactivex.schedulers.Schedulers
@@ -12,14 +11,14 @@ import javax.inject.Singleton
 
 @Singleton
 class GetPhotosRxPagingSource @Inject constructor(
-    private val remoteRoverPhotosDataStore: RemoteRoverPhotosDataStore,
+    private val repository: RoverPhotosRepository,
 ) : RxPagingSource<Int, RoverPhoto>() {
 
 
     override fun loadSingle(params: LoadParams<Int>): Single<LoadResult<Int, RoverPhoto>> {
         var currentLoadingPageKey = params.key ?: 1
 
-        return remoteRoverPhotosDataStore.getPhotos(
+        return repository.getPhotos(
             earthDate = "2021-10-30",
             page = currentLoadingPageKey,
             apiKey = "DEMO_KEY"

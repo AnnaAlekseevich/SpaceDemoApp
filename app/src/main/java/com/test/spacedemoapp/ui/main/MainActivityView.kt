@@ -8,6 +8,7 @@ import moxy.viewstate.strategy.StateStrategyType
 
 @StateStrategyType(AddToEndSingleStrategy::class)
 interface MainActivityView: MvpView {
+    fun showInternetConnectionError()
     fun showException(errorMessage: String)
     fun showProgress()
     fun hideProgress()

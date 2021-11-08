@@ -1,6 +1,7 @@
 package com.test.spacedemoapp.data.repositories
 
 import com.test.spacedemoapp.domain.models.RoverPhoto
+import io.reactivex.Completable
 import io.reactivex.Single
 
 interface LocalRoverPhotosDataStore {
@@ -9,4 +10,8 @@ interface LocalRoverPhotosDataStore {
         page: Int,
         apiKey: String
     ): Single<List<RoverPhoto>>
+
+    fun deleteAllPhotos(): Completable
+
+    fun insertAllPhotos(list: List<RoverPhoto>): Completable
 }

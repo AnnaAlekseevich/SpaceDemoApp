@@ -2,7 +2,9 @@ package com.test.spacedemoapp.data.repositories
 
 import com.test.spacedemoapp.data.common.repositories.RemoteRoverPhotosDataStore
 import com.test.spacedemoapp.domain.models.RoverPhoto
+import io.reactivex.Completable
 import io.reactivex.Single
+import io.reactivex.schedulers.Schedulers
 import javax.inject.Inject
 
 class RoverPhotosRepositoryImpl @Inject constructor(
@@ -10,17 +12,20 @@ class RoverPhotosRepositoryImpl @Inject constructor(
     private val remoteRoverPhotosDataStore: RemoteRoverPhotosDataStore
 ) : RoverPhotosRepository {
 
+    override var isInternetAvailable: Boolean = false
 
     override fun getPhotos(
         earthDate: String,
         page: Int,
-        apiKey: String,
-        isInternetAvailable: Boolean
+        apiKey: String
     ): Single<List<RoverPhoto>> {
         return if (isInternetAvailable) {
-            localRoverPhotosDataStore.getPhotos(earthDate, page, apiKey)
+            remoteRoverPhotosDataStore.getPhotos(earthDate, page, apiKey).flatMap {
+                //add data from Internet to BD
+                return@flatMap insertRoverPhotosFromApiToBD(it).andThen(Single.just(it))
+            }
         } else {
-            remoteRoverPhotosDataStore.getPhotos(
+            localRoverPhotosDataStore.getPhotos(
                 earthDate,
                 page,
                 apiKey
@@ -28,7 +33,9 @@ class RoverPhotosRepositoryImpl @Inject constructor(
         }
     }
 
-    override fun getDataFromDb(earthDate: String, page: Int, apiKey: String): Single<List<RoverPhoto>> {
-        return localRoverPhotosDataStore.getPhotos(earthDate, page, apiKey)
+    private fun insertRoverPhotosFromApiToBD(roverPhotoList: List<RoverPhoto>): Completable {
+        return localRoverPhotosDataStore.insertAllPhotos(roverPhotoList)
+            .subscribeOn(Schedulers.io())
     }
+
 }
