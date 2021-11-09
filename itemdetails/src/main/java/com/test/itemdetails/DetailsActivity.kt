@@ -1,24 +1,24 @@
-package com.test.photodetails.ui
+package com.test.itemdetails
 
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import com.bumptech.glide.Glide
-import com.test.photodetails.databinding.ActivityDetailsBinding
+import com.test.itemdetails.databinding.ActivityDetailsBinding
 import moxy.MvpAppCompatActivity
 import moxy.presenter.InjectPresenter
 import moxy.presenter.ProvidePresenter
 
-open class DetailsActivity : MvpAppCompatActivity(), DetailsActivityView {
+class DetailsActivity: MvpAppCompatActivity(), DetailsActivityView {
 
     private lateinit var binding: ActivityDetailsBinding
 
-    @InjectPresenter
-    lateinit var presenter: DetailsActivityPresenter
-
-    @ProvidePresenter
-    fun provideDetailsPresenter(): DetailsActivityPresenter? = DetailsActivityPresenter()
+//    @InjectPresenter
+//    lateinit var presenter: DetailsActivityPresenter
+//
+//    @ProvidePresenter
+//    fun provideDetailsPresenter(): DetailsActivityPresenter? = DetailsActivityPresenter()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

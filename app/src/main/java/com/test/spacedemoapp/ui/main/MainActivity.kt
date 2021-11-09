@@ -8,7 +8,7 @@ import android.view.View
 import androidx.paging.PagingData
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.snackbar.Snackbar
-import com.test.photodetails.ui.DetailsActivity
+import com.test.itemdetails.DetailsActivity
 import com.test.spacedemoapp.SpaceDemoApp
 import com.test.spacedemoapp.data.repositories.RoverPhotosRepository
 import com.test.spacedemoapp.databinding.ActivityMainBinding

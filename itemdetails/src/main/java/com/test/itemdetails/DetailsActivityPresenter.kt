@@ -1,4 +1,4 @@
-package com.test.photodetails.ui
+package com.test.itemdetails
 
 import moxy.MvpPresenter
 

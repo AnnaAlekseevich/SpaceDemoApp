@@ -1,4 +1,4 @@
-package com.test.photodetails
+package com.test.itemdetails
 
 import org.junit.Test
 

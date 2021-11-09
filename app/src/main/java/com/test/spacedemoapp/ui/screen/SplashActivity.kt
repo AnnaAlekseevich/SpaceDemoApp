@@ -5,7 +5,6 @@ import android.graphics.drawable.AnimatedVectorDrawable
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
-import com.test.photodetails.ui.DetailsActivity
 import com.test.spacedemoapp.R
 import com.test.spacedemoapp.SpaceDemoApp
 import com.test.spacedemoapp.data.repositories.RoverPhotosRepository
