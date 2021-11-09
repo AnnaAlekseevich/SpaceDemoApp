@@ -62,6 +62,7 @@ class RoverPhotosListAdapter(
             Log.d("AdapterData", "titleText + ${roverPhoto.urlItemPhoto}")
             Log.d("AdapterData", "titleTextDescription + ${roverPhoto.urlItemPhoto}")
             binding.clItem.setOnClickListener {
+                Log.d("PHOTOCLICK", "setOnClickListener")
                 itemClickListener.invoke(roverPhoto)
             }
         }

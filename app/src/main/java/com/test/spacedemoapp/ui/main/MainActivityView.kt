@@ -13,4 +13,5 @@ interface MainActivityView: MvpView {
     fun showProgress()
     fun hideProgress()
     fun setPagingData(pagingData: PagingData<RoverPhoto>)
+    fun openDetailsActivity(photoForDetails: String)
 }

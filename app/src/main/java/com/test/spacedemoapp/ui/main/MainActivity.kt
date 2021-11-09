@@ -1,5 +1,6 @@
 package com.test.spacedemoapp.ui.main
 
+import android.content.Intent
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
@@ -7,8 +8,8 @@ import android.view.View
 import androidx.paging.PagingData
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.snackbar.Snackbar
+import com.test.photodetails.ui.DetailsActivity
 import com.test.spacedemoapp.SpaceDemoApp
-import com.test.spacedemoapp.data.common.repositories.RemoteRoverPhotosDataStore
 import com.test.spacedemoapp.data.repositories.RoverPhotosRepository
 import com.test.spacedemoapp.databinding.ActivityMainBinding
 import com.test.spacedemoapp.domain.models.RoverPhoto
@@ -35,6 +36,7 @@ class MainActivity : MvpAppCompatActivity(), MainActivityView {
         return MainActivityPresenter(repository)
     }
 
+
     override fun onCreate(savedInstanceState: Bundle?) {
         SpaceDemoApp.INSTANCE.appComponent.inject(this)
         super.onCreate(savedInstanceState)
@@ -46,7 +48,11 @@ class MainActivity : MvpAppCompatActivity(), MainActivityView {
     }
 
     private fun setupPhotoList() {
-        photoListAdapter = RoverPhotosListAdapter() { photo -> }
+        photoListAdapter = RoverPhotosListAdapter() { photo ->
+            presenter.onPhotoClicked(photo)
+
+            Log.d("PHOTOCLICK", "presenter.onPhotoClicked(photo)")
+        }
         binding.photosRecyclerView.apply {
             layoutManager = LinearLayoutManager(context)
             adapter = photoListAdapter
@@ -68,6 +74,21 @@ class MainActivity : MvpAppCompatActivity(), MainActivityView {
     override fun setPagingData(pagingData: PagingData<RoverPhoto>) {
         photoListAdapter.submitData(lifecycle, pagingData)
         photoListAdapter.notifyDataSetChanged()
+    }
+
+    override fun openDetailsActivity(photoForDetails: String) {
+        Log.d("PHOTOCLICK", "openDetailsActivity + $photoForDetails")
+        //val launchIntent: Intent?  = packageManager.getLaunchIntentForPackage("com.test.itemdetails.ui.DetailsActivity")
+        val launchIntent: Intent? =
+            Intent(this, DetailsActivity::class.java)
+        //packageManager.getLaunchIntentForPackage("package com.test.itemdetails.ui.DetailsActivity")
+//        val launchIntent = Intent()
+//        intent.setClassName(this@MainActivity, DetailsActivity::class)
+        launchIntent?.putExtra("photo", photoForDetails)
+        if (launchIntent != null) {
+            startActivity(launchIntent) //null pointer check in case package name was not found
+        }
+
     }
 
     //todo add BroadcastReviser

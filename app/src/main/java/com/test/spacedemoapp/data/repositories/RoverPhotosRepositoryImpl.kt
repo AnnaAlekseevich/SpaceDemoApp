@@ -1,5 +1,6 @@
 package com.test.spacedemoapp.data.repositories
 
+import android.util.Log
 import com.test.spacedemoapp.data.common.repositories.RemoteRoverPhotosDataStore
 import com.test.spacedemoapp.domain.models.RoverPhoto
 import io.reactivex.Completable
@@ -19,6 +20,7 @@ class RoverPhotosRepositoryImpl @Inject constructor(
         page: Int,
         apiKey: String
     ): Single<List<RoverPhoto>> {
+        Log.d("CHECKRESPONCE", "isInternetAvailable = $isInternetAvailable")
         return if (isInternetAvailable) {
             remoteRoverPhotosDataStore.getPhotos(earthDate, page, apiKey).flatMap {
                 //add data from Internet to BD
