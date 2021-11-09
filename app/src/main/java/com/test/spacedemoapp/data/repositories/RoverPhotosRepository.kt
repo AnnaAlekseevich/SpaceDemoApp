@@ -4,7 +4,6 @@ import com.test.spacedemoapp.domain.models.RoverPhoto
 import io.reactivex.Single
 
 interface RoverPhotosRepository {
-    var isInternetAvailable: Boolean
 
     fun getPhotos(
         earthDate: String,

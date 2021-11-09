@@ -48,7 +48,8 @@ class RoverPhotosListAdapter(
         private val binding = ItemListBinding.bind(itemView)
 
         fun updatePhotoItem(roverPhoto: RoverPhoto) {
-            Log.d("AdapterData", "updatePhotoItem")
+            Log.d("PHOTOCLICK", "RoverPhotosListAdapter updatePhotoItem = $roverPhoto")
+            Log.d("PHOTOCLICK", "updatePhotoItem")
             binding.photo.setImageURI(roverPhoto.urlItemPhoto.toUri())
             binding.titleText.text = roverPhoto.rover.name
             binding.titleTextDescription.text = roverPhoto.roverCamera.fullName
@@ -58,9 +59,9 @@ class RoverPhotosListAdapter(
                     .load(it)
                     .into(binding.photo)
             }
-            Log.d("AdapterData", "photo + ${roverPhoto.urlItemPhoto}")
-            Log.d("AdapterData", "titleText + ${roverPhoto.urlItemPhoto}")
-            Log.d("AdapterData", "titleTextDescription + ${roverPhoto.urlItemPhoto}")
+            Log.d("PHOTOCLICK", "photo + ${roverPhoto.urlItemPhoto}")
+            Log.d("PHOTOCLICK", "titleText + ${roverPhoto.urlItemPhoto}")
+            Log.d("PHOTOCLICK", "titleTextDescription + ${roverPhoto.urlItemPhoto}")
             binding.clItem.setOnClickListener {
                 Log.d("PHOTOCLICK", "setOnClickListener")
                 itemClickListener.invoke(roverPhoto)

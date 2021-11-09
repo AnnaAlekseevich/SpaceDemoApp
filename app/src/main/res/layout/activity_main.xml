@@ -7,11 +7,24 @@
     tools:context=".ui.main.MainActivity"
     android:id="@+id/constraintMainActivity">
 
+    <ProgressBar
+        android:id="@+id/progress_bar"
+        android:layout_width="@dimen/layout_75dp"
+        android:layout_height="@dimen/layout_75dp"
+        android:layout_centerInParent="true"
+        android:layout_gravity="center"
+        android:backgroundTint="@color/white"
+        android:visibility="visible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/photosRecyclerView"
         tools:listitem="@layout/item_list"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

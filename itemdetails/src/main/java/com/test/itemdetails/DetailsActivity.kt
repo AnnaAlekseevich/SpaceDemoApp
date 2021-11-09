@@ -4,11 +4,10 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.util.Log
+import android.view.MenuItem
 import com.bumptech.glide.Glide
 import com.test.itemdetails.databinding.ActivityDetailsBinding
 import moxy.MvpAppCompatActivity
-import moxy.presenter.InjectPresenter
-import moxy.presenter.ProvidePresenter
 
 class DetailsActivity: MvpAppCompatActivity(), DetailsActivityView {
 
@@ -27,6 +26,9 @@ class DetailsActivity: MvpAppCompatActivity(), DetailsActivityView {
         var photoImage: String = intent.getStringExtra("photo").toString()
         binding = ActivityDetailsBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        val actionBar = supportActionBar
+        actionBar?.setDisplayHomeAsUpEnabled(true)
+        actionBar?.setHomeAsUpIndicator(R.drawable.ic_keyboard_backspace_black_24dp)
 
         showRoverPhoto(photoImage)
     }
@@ -44,5 +46,14 @@ class DetailsActivity: MvpAppCompatActivity(), DetailsActivityView {
     //for converting String to Uri
     private fun String.toUri(): Uri = Uri.parse(this)
 
+    override fun onBackPressed() {
+        finish()
+    }
 
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            android.R.id.home -> onBackPressed()
+        }
+        return super.onOptionsItemSelected(item)
+    }
 }

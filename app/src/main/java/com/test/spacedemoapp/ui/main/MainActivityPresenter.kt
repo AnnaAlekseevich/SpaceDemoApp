@@ -1,9 +1,7 @@
 package com.test.spacedemoapp.ui.main
 
 
-import android.content.Intent
 import android.util.Log
-import androidx.core.content.ContextCompat.startActivity
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.rxjava2.cachedIn
@@ -11,6 +9,7 @@ import androidx.paging.rxjava2.observable
 import com.test.spacedemoapp.data.repositories.GetPhotosRxPagingSource
 import com.test.spacedemoapp.data.repositories.RoverPhotosRepository
 import com.test.spacedemoapp.domain.models.RoverPhoto
+import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -25,7 +24,8 @@ import kotlin.coroutines.CoroutineContext
 
 @InjectViewState
 class MainActivityPresenter @Inject constructor(
-    private val roverPhotosRepository: RoverPhotosRepository
+    private val roverPhotosRepository: RoverPhotosRepository,
+    private val internetStateObservable: Observable<Boolean>
 ) : MvpPresenter<MainActivityView>() {
 
     private val presenterScope: CoroutineScope by lazy {
@@ -35,13 +35,22 @@ class MainActivityPresenter @Inject constructor(
 
     override fun attachView(view: MainActivityView?) {
         super.attachView(view)
+
+        internetStateObservable.subscribe { newInternetState ->
+            Log.d("INTERNET_CHECK", "PRESENTER NEW VALUE = $newInternetState")
+            setInternetAvailable(newInternetState)
+        }
+
         Pager(PagingConfig(pageSize = 25)) {
             GetPhotosRxPagingSource(roverPhotosRepository)
         }.observable.observeOn(AndroidSchedulers.mainThread()).cachedIn(presenterScope)
             .subscribe { pagingData ->  //set it to view
+                Log.d("Progress", "attachView in Presenter")
+                viewState.hideProgress()
                 viewState.setPagingData(pagingData)
             }
     }
+
 
     fun onPhotoClicked(roverPhoto: RoverPhoto) {
         Log.d("PHOTOCLICK", "onPhotoClicked + $roverPhoto")
@@ -49,15 +58,7 @@ class MainActivityPresenter @Inject constructor(
         viewState.openDetailsActivity(photoForDetails)
     }
 
-    fun setInternetAvailable(isAvailable: Boolean) {
-        roverPhotosRepository.isInternetAvailable = isAvailable
-        if (isAvailable) {
-            roverPhotosRepository.getPhotos("2021-10-30", 1, "DEMO_KEY")
-            Log.d("NETWORKCONNEKTION", "Internet's available")
-        } else {
-            roverPhotosRepository.getPhotos("2021-10-30", 1, "DEMO_KEY")
-            Log.d("NETWORKCONNEKTION", "Internet doesn't available")
-        }
+    private fun setInternetAvailable(isAvailable: Boolean) {
         if (!isAvailable) {
             viewState.showInternetConnectionError()
         }

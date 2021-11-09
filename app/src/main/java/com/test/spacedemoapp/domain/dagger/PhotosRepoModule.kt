@@ -6,6 +6,7 @@ import com.test.spacedemoapp.data.repositories.RoverPhotosRepository
 import com.test.spacedemoapp.data.repositories.RoverPhotosRepositoryImpl
 import dagger.Module
 import dagger.Provides
+import io.reactivex.Observable
 import javax.inject.Singleton
 
 @Module
@@ -14,9 +15,12 @@ object PhotosRepoModule {
     @JvmStatic
     @Singleton
     @Provides
-    fun getRoverPhotosRepository(localRoverPhotosDataStore: LocalRoverPhotosDataStore,
-                                 remoteRoverPhotosDataStore: RemoteRoverPhotosDataStore): RoverPhotosRepository {
-        return RoverPhotosRepositoryImpl(localRoverPhotosDataStore, remoteRoverPhotosDataStore)
+    fun getRoverPhotosRepository(
+        localRoverPhotosDataStore: LocalRoverPhotosDataStore,
+        remoteRoverPhotosDataStore: RemoteRoverPhotosDataStore,
+        internetStateObservable: Observable<Boolean>
+    ): RoverPhotosRepository {
+        return RoverPhotosRepositoryImpl(localRoverPhotosDataStore, remoteRoverPhotosDataStore, internetStateObservable)
     }
 
 }

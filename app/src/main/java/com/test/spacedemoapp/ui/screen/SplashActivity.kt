@@ -45,6 +45,7 @@ class SplashActivity : MvpAppCompatActivity(), SplashActivityView {
         Handler(Looper.getMainLooper()).postDelayed({
             val i = Intent(this@SplashActivity, MainActivity::class.java)
             startActivity(i)
+            finish()
         }, 3000)
     }
 
