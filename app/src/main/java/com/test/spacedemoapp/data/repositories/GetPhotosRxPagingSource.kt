@@ -16,7 +16,6 @@ class GetPhotosRxPagingSource @Inject constructor(
 
     override fun loadSingle(params: LoadParams<Int>): Single<LoadResult<Int, RoverPhoto>> {
         val currentLoadingPageKey = params.key ?: 1
-
         return repository.getPhotos(
             earthDate = "2021-10-30",
             page = currentLoadingPageKey,
@@ -34,11 +33,13 @@ class GetPhotosRxPagingSource @Inject constructor(
         data: List<RoverPhoto>,
         currentLoadingPageKey: Int
     ): LoadResult<Int, RoverPhoto> {
-        Log.d("Progress", "GetPhotosRxPagingSource")
-        //Log.d("PHOTOCLICK", "GetPhotosRxPagingSource toLoadResult data = $data")
+
+        //this check does not allow error "429"
+        if (data.isNullOrEmpty()) {
+            return LoadResult.Error(Throwable("EmptyListFromRepo"))
+        }
+
         val prevKey = if (currentLoadingPageKey == 1) null else currentLoadingPageKey - 1
-        Log.d("CheckKey", "prevKey = $prevKey")
-        Log.d("CheckKey", "nextKey = ${currentLoadingPageKey.plus(1)}")
         return LoadResult.Page(
             data = data,
             prevKey = prevKey,
@@ -47,7 +48,7 @@ class GetPhotosRxPagingSource @Inject constructor(
     }
 
     override fun getRefreshKey(state: PagingState<Int, RoverPhoto>): Int? {
-        TODO("Not yet implemented")
+        return state.anchorPosition
     }
 
 }

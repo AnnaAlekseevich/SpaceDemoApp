@@ -4,5 +4,5 @@ import moxy.InjectViewState
 import moxy.MvpPresenter
 
 @InjectViewState
-class SplashActivityPresentor : MvpPresenter<SplashActivityView>() {
+class SplashActivityPresenter : MvpPresenter<SplashActivityView>() {
 }

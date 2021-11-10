@@ -7,7 +7,8 @@ import moxy.viewstate.strategy.AddToEndSingleStrategy
 import moxy.viewstate.strategy.StateStrategyType
 
 @StateStrategyType(AddToEndSingleStrategy::class)
-interface MainActivityView: MvpView {
+interface MainView: MvpView {
+    fun resetPhotosList()
     fun showInternetConnectionError()
     fun showException(errorMessage: String)
     fun showProgress()

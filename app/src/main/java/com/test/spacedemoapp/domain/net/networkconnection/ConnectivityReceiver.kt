@@ -10,8 +10,8 @@ import com.test.spacedemoapp.SpaceDemoApp
 class ConnectivityReceiver : BroadcastReceiver() {
 
     override fun onReceive(context: Context?, intent: Intent?) {
-        Log.d("ConnectivityReceiver", "onReceive")
-        //context?.let { SpaceDemoApp.updateInternetState(isConnectedOrConnecting(it)) }
+//        Log.d("ConnectivityReceiver", "onReceive")
+//        context?.let { SpaceDemoApp.updateInternetState(isConnectedOrConnecting(it)) }
 
     }
 

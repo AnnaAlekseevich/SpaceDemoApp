@@ -30,11 +30,9 @@ class RoverPhotosRepositoryImpl @Inject constructor(
         page: Int,
         apiKey: String
     ): Single<List<RoverPhoto>> {
-        Log.d("PHOTOCLICK", "Repository isInternetAvailable = $isInternetAvailable")
         return if (isInternetAvailable) {
             remoteRoverPhotosDataStore.getPhotos(earthDate, page, apiKey).flatMap {
                 val dataList = it
-                Log.d("PHOTOCLICK", "Repository photos loaded = $it")
                 return@flatMap insertRoverPhotosFromApiToBD(it).andThen(
                     Single.just(it)
                 ).onErrorReturn { return@onErrorReturn dataList }
@@ -45,13 +43,13 @@ class RoverPhotosRepositoryImpl @Inject constructor(
                 page,
                 apiKey
             ).flatMap {
-                Log.d("DB_LOADING", "Repository photos FROM db loaded = $it")
                 return@flatMap Single.just(it)
             }
         }
     }
 
     private fun insertRoverPhotosFromApiToBD(roverPhotoList: List<RoverPhoto>): Completable {
+        localRoverPhotosDataStore.deleteAllPhotos().subscribeOn(Schedulers.io())
         return localRoverPhotosDataStore.insertAllPhotos(roverPhotoList)
             .subscribeOn(Schedulers.io())
     }

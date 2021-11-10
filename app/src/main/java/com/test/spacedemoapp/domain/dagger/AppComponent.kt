@@ -1,6 +1,6 @@
-package com.test.spacedemoapp
+package com.test.spacedemoapp.domain.dagger
 
-import com.test.spacedemoapp.domain.dagger.*
+import com.test.spacedemoapp.ui.main.FragmentMain
 import com.test.spacedemoapp.ui.main.MainActivity
 import com.test.spacedemoapp.ui.screen.SplashActivity
 import dagger.Component
@@ -16,4 +16,5 @@ import javax.inject.Singleton
 interface AppComponent {
     fun inject(activity: MainActivity)
     fun inject(activity: SplashActivity)
+    fun inject(fragment: FragmentMain)
 }

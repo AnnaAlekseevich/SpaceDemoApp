@@ -1,6 +1,8 @@
 package com.test.spacedemoapp.domain.db
 
-import androidx.room.*
+import androidx.room.Dao
+import androidx.room.Insert
+import androidx.room.Query
 import com.test.spacedemoapp.domain.models.RoverPhoto
 import io.reactivex.Completable
 import io.reactivex.Single

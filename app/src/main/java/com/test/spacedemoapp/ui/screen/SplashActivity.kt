@@ -25,10 +25,10 @@ class SplashActivity : MvpAppCompatActivity(), SplashActivityView {
     lateinit var roverPhotosRepository: RoverPhotosRepository
 
     @InjectPresenter
-    lateinit var presenter: SplashActivityPresentor
+    lateinit var presenter: SplashActivityPresenter
 
     @ProvidePresenter
-    fun provideDetailsPresenter(): SplashActivityPresentor? = SplashActivityPresentor()
+    fun provideDetailsPresenter(): SplashActivityPresenter? = SplashActivityPresenter()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         SpaceDemoApp.INSTANCE.appComponent.inject(this)

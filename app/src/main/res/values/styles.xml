@@ -6,12 +6,12 @@
         <item name="android:textSize">@dimen/text_size_12sp</item>
     </style>
     <style  name="TitleTextDescription">
-        <item name="android:textColor">@color/white</item>
+        <item name="android:textColor">@color/medium_violet_red</item>
         <item name="android:fontFamily">"sans-serif"</item>
         <item name="android:textSize">@dimen/text_size_9sp</item>
     </style>
     <style  name="TitleShowImage">
-        <item name="android:textColor">@color/medium_violet_red</item>
+        <item name="android:textColor">@color/purple_500</item>
         <item name="android:fontFamily">"sans-serif-medium"</item>
         <item name="android:textSize">@dimen/text_size_12sp</item>
     </style>

@@ -23,17 +23,19 @@ import kotlin.coroutines.CoroutineContext
 
 
 @InjectViewState
-class MainActivityPresenter @Inject constructor(
+class MainPresenter @Inject constructor(
     private val roverPhotosRepository: RoverPhotosRepository,
     private val internetStateObservable: Observable<Boolean>
-) : MvpPresenter<MainActivityView>() {
+) : MvpPresenter<MainView>() {
+
+    private var isCurrentInternetState: Boolean = false
 
     private val presenterScope: CoroutineScope by lazy {
         val context: CoroutineContext = Dispatchers.Main.plus(SupervisorJob(null))
         CoroutineScope(context)
     }
 
-    override fun attachView(view: MainActivityView?) {
+    override fun attachView(view: MainView?) {
         super.attachView(view)
 
         internetStateObservable.subscribe { newInternetState ->
@@ -60,8 +62,16 @@ class MainActivityPresenter @Inject constructor(
 
     private fun setInternetAvailable(isAvailable: Boolean) {
         if (!isAvailable) {
+            Log.d("INTERNET_CHECK!", "isAvailable = $isAvailable")
             viewState.showInternetConnectionError()
         }
+        if (isCurrentInternetState != isAvailable) {
+            viewState.resetPhotosList()
+            Log.d("INTERNET_CHECK!", "isAvailable = $isAvailable")
+        }
+        isCurrentInternetState = isAvailable
+
+
     }
 
     private fun showException(throwable: Throwable?) {
