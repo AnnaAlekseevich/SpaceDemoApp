@@ -26,7 +26,6 @@ object ApiModule {
 
         return Retrofit.Builder()
             .baseUrl("https://api.nasa.gov/mars-photos/")
-
             .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
             .addConverterFactory(GsonConverterFactory.create(gson))
             .client(

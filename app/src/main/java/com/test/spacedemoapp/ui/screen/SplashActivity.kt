@@ -10,6 +10,7 @@ import com.test.spacedemoapp.SpaceDemoApp
 import com.test.spacedemoapp.data.repositories.RoverPhotosRepository
 import com.test.spacedemoapp.databinding.ActivitySplashBinding
 import com.test.spacedemoapp.ui.main.MainActivity
+import io.reactivex.Observable
 import kotlinx.android.synthetic.main.activity_main.*
 import moxy.MvpAppCompatActivity
 import moxy.presenter.InjectPresenter
@@ -24,11 +25,15 @@ class SplashActivity : MvpAppCompatActivity(), SplashActivityView {
     @Inject
     lateinit var roverPhotosRepository: RoverPhotosRepository
 
+    @Inject
+    lateinit var internetStateObservable: Observable<Boolean>
+
     @InjectPresenter
     lateinit var presenter: SplashActivityPresenter
 
     @ProvidePresenter
-    fun provideDetailsPresenter(): SplashActivityPresenter? = SplashActivityPresenter()
+    fun provideDetailsPresenter(): SplashActivityPresenter =
+        SplashActivityPresenter()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         SpaceDemoApp.INSTANCE.appComponent.inject(this)

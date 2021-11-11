@@ -2,19 +2,18 @@
 <resources>
     <dimen name="logo_height">24dp</dimen>
     <dimen name="logo_width">24dp</dimen>
-    <dimen name="text_size_9sp">9sp</dimen>
+    <dimen name="text_size_16sp">16sp</dimen>
     <dimen name="text_size_12sp">12sp</dimen>
     <dimen name="text_size_14sp">14sp</dimen>
-    <dimen name="text_size_16sp">16sp</dimen>
-    <dimen name="text_size_18sp">18sp</dimen>
-    <dimen name="text_size_20sp">20sp</dimen>
-    <dimen name="text_size_24sp">24sp</dimen>
-    <dimen name="text_size_28sp">28sp</dimen>
-    <dimen name="text_size_36sp">36sp</dimen>
+    <dimen name="layout_0dp">0dp</dimen>
     <dimen name="layout_4dp">4dp</dimen>
+    <dimen name="layout_10dp">10dp</dimen>
     <dimen name="layout_12dp">12dp</dimen>
     <dimen name="layout_16dp">16dp</dimen>
     <dimen name="layout_45dp">45dp</dimen>
     <dimen name="layout_80dp">80dp</dimen>
     <dimen name="layout_75dp">75dp</dimen>
+    <dimen name="layout_100dp">100dp</dimen>
+    <dimen name="layout_156dp">156dp</dimen>
+    <dimen name="photos_list_spacing">5dp</dimen>
 </resources>

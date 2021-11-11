@@ -10,9 +10,8 @@ import moxy.viewstate.strategy.StateStrategyType
 interface MainView: MvpView {
     fun resetPhotosList()
     fun showInternetConnectionError()
-    fun showException(errorMessage: String)
     fun showProgress()
     fun hideProgress()
     fun setPagingData(pagingData: PagingData<RoverPhoto>)
-    fun openDetailsActivity(photoForDetails: String)
+    fun openDetailsScreen(photoForDetails: String, cameraName: String, roverName: String)
 }

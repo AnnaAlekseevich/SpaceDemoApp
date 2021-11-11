@@ -1,6 +1,5 @@
 package com.test.spacedemoapp.data.repositories
 
-import android.util.Log
 import androidx.paging.PagingState
 import androidx.paging.rxjava2.RxPagingSource
 import com.test.spacedemoapp.domain.models.RoverPhoto
@@ -19,12 +18,12 @@ class GetPhotosRxPagingSource @Inject constructor(
         return repository.getPhotos(
             earthDate = "2021-10-30",
             page = currentLoadingPageKey,
-            apiKey = "gNsHlfPRJY7iFwXdTsIzdNNO7YyPipOIg79CFjK1"
+            apiKey = "gNsHlfPRJY7iFwXdTsIzdNNO7YyPipOIg79CFjK1",
+            perPage = 25
         )
             .subscribeOn(Schedulers.io())
             .map { toLoadResult(it, currentLoadingPageKey) }
             .onErrorReturn {
-                Log.d("DB_LOADING", "GetPhotosRxPagingSource error $it ")
                 LoadResult.Error(it)
             }
     }

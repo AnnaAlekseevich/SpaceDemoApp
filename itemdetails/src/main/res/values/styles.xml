@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <style  name="TitleText">
+    <style  name="TitleRover">
         <item name="android:textColor">@color/medium_violet_red</item>
         <item name="android:fontFamily">"sans-serif"</item>
-        <item name="android:textSize">@dimen/text_size_16sp</item>
+        <item name="android:textSize">@dimen/text_size_24sp</item>
         <item name="android:textStyle">bold</item>
     </style>
-    <style  name="TitleTextDescription">
+    <style  name="TitleCameraName">
         <item name="android:textColor">@color/purple_500</item>
         <item name="android:fontFamily">"sans-serif"</item>
-        <item name="android:textSize">@dimen/text_size_14sp</item>
+        <item name="android:textSize">@dimen/text_size_20sp</item>
     </style>
 </resources>

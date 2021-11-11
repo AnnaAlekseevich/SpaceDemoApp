@@ -1,24 +1,21 @@
 package com.test.spacedemoapp.domain.net.networkconnection
 
-
 import android.content.Context
 import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
 import android.os.Build
 
-class NetWorkConnection {
-    companion object {
+object NetWorkConnection {
 
-        fun isInternetAvailable(context: Context): Boolean {
-            //todo !!! add another implementation
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                var result: Boolean = false
-                val connectivityManager =
-                    context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
-                val networkCapabilities =
-                    connectivityManager.activeNetwork ?: return false
+    fun isInternetAvailable(context: Context): Boolean {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            var result = false
+            val connectivityManager =
+                context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+            val networkCapabilities =
+                connectivityManager.activeNetwork ?: return false
 
-                val actNw =
+            val actNw =
                     connectivityManager.getNetworkCapabilities(networkCapabilities) ?: return false
                 result = when {
                     actNw.hasTransport(NetworkCapabilities.TRANSPORT_WIFI) -> true
@@ -31,5 +28,5 @@ class NetWorkConnection {
                 return false
             }
         }
-    }
+
 }

@@ -2,7 +2,6 @@ package com.test.spacedemoapp.ui.main
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,10 +10,12 @@ import androidx.paging.PagingData
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.google.android.material.snackbar.Snackbar
 import com.test.itemdetails.DetailsActivity
+import com.test.spacedemoapp.R
 import com.test.spacedemoapp.SpaceDemoApp
 import com.test.spacedemoapp.data.repositories.RoverPhotosRepository
 import com.test.spacedemoapp.databinding.FragmentMainBinding
 import com.test.spacedemoapp.domain.models.RoverPhoto
+import com.test.spacedemoapp.ui.adapter.ItemDecorationColumns
 import com.test.spacedemoapp.ui.adapter.RoverPhotosListAdapter
 import io.reactivex.Observable
 import moxy.MvpAppCompatFragment
@@ -67,15 +68,19 @@ class FragmentMain: MvpAppCompatFragment(), MainView {
 
     private fun setupPhotoList() {
         photoListAdapter = RoverPhotosListAdapter() { photo ->
-            presenter.onPhotoClicked(photo)
-
-            Log.d("PHOTOCLICK", "presenter.onPhotoClicked(photo)")
+            openDetailsScreen(photo.urlItemPhoto, photo.roverCamera.fullName, photo.rover.name)
         }
         binding.photosRecyclerView.apply {
             layoutManager = StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
             adapter = photoListAdapter
         }
-
+        binding.photosRecyclerView.addItemDecoration(
+            ItemDecorationColumns(
+                resources.getInteger(R.integer.photo_list_preview_columns),
+                resources.getDimensionPixelSize(R.dimen.photos_list_spacing),
+                true
+            )
+        )
     }
 
     override fun resetPhotosList() {
@@ -84,14 +89,9 @@ class FragmentMain: MvpAppCompatFragment(), MainView {
 
     override fun showInternetConnectionError() {
         view?.let {
-            Snackbar.make(it, "Please check your internet connection", Snackbar.LENGTH_LONG)
-                .setAction("OK", View.OnClickListener { /*Take Action*/ }).show()
+            Snackbar.make(it, R.string.check_internet_connection, Snackbar.LENGTH_LONG)
+                .setAction(R.string.OK, View.OnClickListener { /*Take Action*/ }).show()
         }
-        Log.d("NETWORKCONNEKTION", "Internet don't available")
-    }
-
-    override fun showException(errorMessage: String) {
-        Log.d("AdapterData", "errorMessage + $errorMessage")
     }
 
     override fun showProgress() {
@@ -107,13 +107,18 @@ class FragmentMain: MvpAppCompatFragment(), MainView {
         photoListAdapter.notifyDataSetChanged()
     }
 
-    override fun openDetailsActivity(photoForDetails: String) {
-        val launchIntent: Intent? =
-            Intent(context, DetailsActivity::class.java)
-        launchIntent?.putExtra("photo", photoForDetails)
-        if (launchIntent != null) {
-            startActivity(launchIntent) //null pointer check in case package name was not found
+    override fun openDetailsScreen(
+        photoForDetails: String,
+        cameraName: String,
+        roverName: String
+    ) {
+        val launchIntent = Intent(context, DetailsActivity::class.java)
+        with(launchIntent) {
+            putExtra("photo", photoForDetails)
+            putExtra("CameraName", cameraName)
+            putExtra("RoverName", roverName)
         }
+        startActivity(launchIntent)
     }
 
 }

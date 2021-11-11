@@ -1,6 +1,5 @@
 package com.test.spaceapp.data.common.repositories
 
-import android.util.Log
 import com.test.spacedemoapp.data.common.repositories.RemoteRoverPhotosDataStore
 import com.test.spacedemoapp.domain.models.RoverPhoto
 import com.test.spacedemoapp.domain.net.ApiRoverPhotos

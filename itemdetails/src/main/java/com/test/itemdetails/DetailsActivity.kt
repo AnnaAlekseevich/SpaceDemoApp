@@ -14,6 +14,7 @@ import androidx.core.content.FileProvider
 import com.bumptech.glide.Glide
 import com.test.itemdetails.databinding.ActivityDetailsBinding
 import moxy.MvpAppCompatActivity
+import moxy.presenter.ProvidePresenter
 import java.io.File
 import java.io.FileOutputStream
 
@@ -22,17 +23,14 @@ class DetailsActivity: MvpAppCompatActivity(), DetailsActivityView {
 
     private lateinit var binding: ActivityDetailsBinding
 
-//    @InjectPresenter
-//    lateinit var presenter: DetailsActivityPresenter
-//
-//    @ProvidePresenter
-//    fun provideDetailsPresenter(): DetailsActivityPresenter? = DetailsActivityPresenter()
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        //setContentView(R.layout.activity_details)
-        val intent: Intent = getIntent()
-        var photoImage: String = intent.getStringExtra("photo").toString()
+        val intent= intent
+
+        val photoImage: String = intent.getStringExtra("photo").toString()
+        val roverCameraName: String = intent.getStringExtra("CameraName").toString()
+        val roverFullName: String = intent.getStringExtra("RoverName").toString()
+
         binding = ActivityDetailsBinding.inflate(layoutInflater)
         setContentView(binding.root)
         val actionBar = supportActionBar
@@ -40,10 +38,11 @@ class DetailsActivity: MvpAppCompatActivity(), DetailsActivityView {
         actionBar?.setHomeAsUpIndicator(R.drawable.ic_keyboard_backspace_black_24dp)
 
         showRoverPhoto(photoImage)
+        binding.cameraName.text = roverCameraName
+        binding.roverName.text = roverFullName
     }
 
     override fun showRoverPhoto(pictureUri: String) {
-        Log.d("PHOTOCLICK", "showRoverPhoto + $pictureUri")
         pictureUri?.toUri()?.let {
             Glide
                 .with(binding.roverPhotoDetails.context)
@@ -54,10 +53,6 @@ class DetailsActivity: MvpAppCompatActivity(), DetailsActivityView {
 
     //for converting String to Uri
     private fun String.toUri(): Uri = Uri.parse(this)
-
-    override fun onBackPressed() {
-        finish()
-    }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {

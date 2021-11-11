@@ -26,5 +26,7 @@ data class RoverPhoto(
 
     //rover photo
     @SerializedName("img_src")
-    var urlItemPhoto: String
+    var urlItemPhoto: String,
+
+    var dbSortPage: Int
 )

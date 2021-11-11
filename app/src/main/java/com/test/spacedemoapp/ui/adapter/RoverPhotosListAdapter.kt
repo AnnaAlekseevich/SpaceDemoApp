@@ -1,7 +1,6 @@
 package com.test.spacedemoapp.ui.adapter
 
 import android.net.Uri
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,11 +9,11 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.test.spacedemoapp.R
-import com.test.spacedemoapp.databinding.ItemListBinding
+import com.test.spacedemoapp.databinding.ItemPhotoListBinding
 import com.test.spacedemoapp.domain.models.RoverPhoto
 
 class RoverPhotosListAdapter(
-    val itemClickListener: (photo: RoverPhoto) -> Unit
+    private val itemClickListener: (photo: RoverPhoto) -> Unit
 ) : PagingDataAdapter<RoverPhoto, RoverPhotosListAdapter.RoverPhotosViewHolder>(DataDifferntiator) {
 
     override fun onBindViewHolder(holder: RoverPhotosViewHolder, position: Int) {
@@ -28,7 +27,7 @@ class RoverPhotosListAdapter(
         return RoverPhotosViewHolder(
             LayoutInflater
                 .from(parent.context)
-                .inflate(R.layout.item_list, parent, false)
+                .inflate(R.layout.item_photo_list, parent, false)
         )
     }
 
@@ -44,12 +43,9 @@ class RoverPhotosListAdapter(
     }
 
     inner class RoverPhotosViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-
-        private val binding = ItemListBinding.bind(itemView)
+        private val binding = ItemPhotoListBinding.bind(itemView)
 
         fun updatePhotoItem(roverPhoto: RoverPhoto) {
-            Log.d("PHOTOCLICK", "RoverPhotosListAdapter updatePhotoItem = $roverPhoto")
-            Log.d("PHOTOCLICK", "updatePhotoItem")
             binding.photo.setImageURI(roverPhoto.urlItemPhoto.toUri())
             binding.titleText.text = roverPhoto.rover.name
             binding.titleTextDescription.text = roverPhoto.roverCamera.fullName
@@ -59,15 +55,10 @@ class RoverPhotosListAdapter(
                     .load(it)
                     .into(binding.photo)
             }
-            Log.d("PHOTOCLICK", "photo + ${roverPhoto.urlItemPhoto}")
-            Log.d("PHOTOCLICK", "titleText + ${roverPhoto.urlItemPhoto}")
-            Log.d("PHOTOCLICK", "titleTextDescription + ${roverPhoto.urlItemPhoto}")
             binding.clItem.setOnClickListener {
-                Log.d("PHOTOCLICK", "setOnClickListener")
                 itemClickListener.invoke(roverPhoto)
             }
         }
-
     }
 }
 //for converting String to Uri

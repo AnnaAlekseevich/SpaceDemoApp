@@ -7,8 +7,13 @@ import javax.inject.Inject
 
 class DatabaseHelperImpl @Inject constructor(private val appDatabase: AppDatabase) : DatabaseHelper {
 
-    override fun getPhotos(earthDate: String, page: Int, apiKey: String): Single<List<RoverPhoto>> {
-        return appDatabase.roverPhotoDao().getRoverPhoto()
+    override fun getPhotos(
+        earthDate: String,
+        offset: Int,
+        apiKey: String,
+        perPage: Int
+    ): Single<List<RoverPhoto>> {
+        return appDatabase.roverPhotoDao().getRoverPhoto(perPage, offset)
     }
 
     override fun insertRoverPhoto(roverPhotoList: List<RoverPhoto>): Completable {

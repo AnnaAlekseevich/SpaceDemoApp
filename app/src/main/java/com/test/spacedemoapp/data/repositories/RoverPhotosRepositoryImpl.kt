@@ -1,12 +1,9 @@
 package com.test.spacedemoapp.data.repositories
 
-import android.util.Log
 import com.test.spacedemoapp.data.common.repositories.RemoteRoverPhotosDataStore
 import com.test.spacedemoapp.domain.models.RoverPhoto
-import io.reactivex.Completable
 import io.reactivex.Observable
 import io.reactivex.Single
-import io.reactivex.schedulers.Schedulers
 import javax.inject.Inject
 
 class RoverPhotosRepositoryImpl @Inject constructor(
@@ -24,34 +21,32 @@ class RoverPhotosRepositoryImpl @Inject constructor(
         }
     }
 
-
     override fun getPhotos(
         earthDate: String,
         page: Int,
-        apiKey: String
+        apiKey: String,
+        perPage: Int
     ): Single<List<RoverPhoto>> {
         return if (isInternetAvailable) {
             remoteRoverPhotosDataStore.getPhotos(earthDate, page, apiKey).flatMap {
+                it.forEach { photo -> photo.dbSortPage = page }
                 val dataList = it
                 return@flatMap insertRoverPhotosFromApiToBD(it).andThen(
                     Single.just(it)
                 ).onErrorReturn { return@onErrorReturn dataList }
             }
         } else {
+            val offset = (page - 1) * perPage
             localRoverPhotosDataStore.getPhotos(
                 earthDate,
-                page,
-                apiKey
-            ).flatMap {
-                return@flatMap Single.just(it)
-            }
+                offset,
+                apiKey,
+                perPage
+            )
         }
     }
 
-    private fun insertRoverPhotosFromApiToBD(roverPhotoList: List<RoverPhoto>): Completable {
-        localRoverPhotosDataStore.deleteAllPhotos().subscribeOn(Schedulers.io())
-        return localRoverPhotosDataStore.insertAllPhotos(roverPhotoList)
-            .subscribeOn(Schedulers.io())
-    }
+    private fun insertRoverPhotosFromApiToBD(roverPhotoList: List<RoverPhoto>) =
+        localRoverPhotosDataStore.insertAllPhotos(roverPhotoList)
 
 }

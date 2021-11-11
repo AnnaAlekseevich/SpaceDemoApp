@@ -8,7 +8,8 @@ interface RoverPhotosRepository {
     fun getPhotos(
         earthDate: String,
         page: Int,
-        apiKey: String
+        apiKey: String,
+        perPage: Int
     ): Single<List<RoverPhoto>>
 
 }
