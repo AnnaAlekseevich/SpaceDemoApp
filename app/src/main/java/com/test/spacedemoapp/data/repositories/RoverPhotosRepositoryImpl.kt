@@ -5,7 +5,9 @@ import com.test.spacedemoapp.domain.models.RoverPhoto
 import io.reactivex.Observable
 import io.reactivex.Single
 import javax.inject.Inject
+import javax.inject.Singleton
 
+@Singleton
 class RoverPhotosRepositoryImpl @Inject constructor(
     private val localRoverPhotosDataStore: LocalRoverPhotosDataStore,
     private val remoteRoverPhotosDataStore: RemoteRoverPhotosDataStore,

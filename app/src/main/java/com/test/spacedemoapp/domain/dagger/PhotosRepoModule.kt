@@ -6,9 +6,12 @@ import com.test.spacedemoapp.data.repositories.RoverPhotosRepository
 import com.test.spacedemoapp.data.repositories.RoverPhotosRepositoryImpl
 import dagger.Module
 import dagger.Provides
+import dagger.hilt.InstallIn
+import dagger.hilt.components.SingletonComponent
 import io.reactivex.Observable
 import javax.inject.Singleton
 
+@InstallIn(SingletonComponent::class)
 @Module
 object PhotosRepoModule {
 

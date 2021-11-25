@@ -13,21 +13,18 @@ import android.net.NetworkCapabilities
 import android.net.NetworkCapabilities.NET_CAPABILITY_INTERNET
 import android.net.NetworkCapabilities.NET_CAPABILITY_VALIDATED
 import android.os.Build
-import com.test.spacedemoapp.domain.dagger.AppComponent
-import com.test.spacedemoapp.domain.dagger.AppModule
-import com.test.spacedemoapp.domain.dagger.DaggerAppComponent
 import com.test.spacedemoapp.domain.net.networkconnection.NetWorkConnection
+import dagger.hilt.android.HiltAndroidApp
 import io.reactivex.subjects.BehaviorSubject
 
+@HiltAndroidApp
 class SpaceDemoApp: Application() {
-    lateinit var appComponent: AppComponent
 
     override fun onCreate() {
         super.onCreate()
         INSTANCE = this
         NetWorkConnection.isInternetAvailable(this)
         internetStateObservable.onNext(NetWorkConnection.isInternetAvailable(this))
-        this.appComponent = this.initDagger()
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
             val cm = getSystemService(CONNECTIVITY_SERVICE) as ConnectivityManager
@@ -68,14 +65,10 @@ class SpaceDemoApp: Application() {
 
     companion object {
         lateinit var INSTANCE: SpaceDemoApp
-        private val internetStateObservable: BehaviorSubject<Boolean> = BehaviorSubject.create()
+        val internetStateObservable: BehaviorSubject<Boolean> = BehaviorSubject.create()
 
         fun updateInternetState(isInternetAvailable: Boolean) {
             internetStateObservable.onNext(isInternetAvailable)
         }
     }
-
-    private fun initDagger() = DaggerAppComponent.builder()
-        .appModule(AppModule(this, internetStateObservable))
-        .build()
 }

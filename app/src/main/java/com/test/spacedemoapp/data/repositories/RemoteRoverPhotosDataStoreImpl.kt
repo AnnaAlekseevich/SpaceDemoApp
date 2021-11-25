@@ -6,7 +6,9 @@ import com.test.spacedemoapp.domain.net.ApiRoverPhotos
 import io.reactivex.Single
 import io.reactivex.schedulers.Schedulers
 import javax.inject.Inject
+import javax.inject.Singleton
 
+@Singleton
 class RemoteRoverPhotosDataStoreImpl
 @Inject constructor(private val apiRoverPhotos: ApiRoverPhotos) : RemoteRoverPhotosDataStore {
     override fun getPhotos(

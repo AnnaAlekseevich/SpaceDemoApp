@@ -10,6 +10,7 @@ import com.test.spacedemoapp.SpaceDemoApp
 import com.test.spacedemoapp.data.repositories.RoverPhotosRepository
 import com.test.spacedemoapp.databinding.ActivitySplashBinding
 import com.test.spacedemoapp.ui.main.MainActivity
+import dagger.hilt.android.AndroidEntryPoint
 import io.reactivex.Observable
 import kotlinx.android.synthetic.main.activity_main.*
 import moxy.MvpAppCompatActivity
@@ -17,6 +18,7 @@ import moxy.presenter.InjectPresenter
 import moxy.presenter.ProvidePresenter
 import javax.inject.Inject
 
+@AndroidEntryPoint
 class SplashActivity : MvpAppCompatActivity(), SplashActivityView {
 
     private lateinit var binding: ActivitySplashBinding
@@ -36,7 +38,6 @@ class SplashActivity : MvpAppCompatActivity(), SplashActivityView {
         SplashActivityPresenter()
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        SpaceDemoApp.INSTANCE.appComponent.inject(this)
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_splash)
 

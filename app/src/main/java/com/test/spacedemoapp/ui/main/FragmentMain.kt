@@ -17,12 +17,14 @@ import com.test.spacedemoapp.databinding.FragmentMainBinding
 import com.test.spacedemoapp.domain.models.RoverPhoto
 import com.test.spacedemoapp.ui.adapter.ItemDecorationColumns
 import com.test.spacedemoapp.ui.adapter.RoverPhotosListAdapter
+import dagger.hilt.android.AndroidEntryPoint
 import io.reactivex.Observable
 import moxy.MvpAppCompatFragment
 import moxy.presenter.InjectPresenter
 import moxy.presenter.ProvidePresenter
 import javax.inject.Inject
 
+@AndroidEntryPoint
 class FragmentMain: MvpAppCompatFragment(), MainView {
 
     private lateinit var binding: FragmentMainBinding
@@ -43,7 +45,6 @@ class FragmentMain: MvpAppCompatFragment(), MainView {
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        SpaceDemoApp.INSTANCE.appComponent.inject(this)
         super.onCreate(savedInstanceState)
         setHasOptionsMenu(true)
     }

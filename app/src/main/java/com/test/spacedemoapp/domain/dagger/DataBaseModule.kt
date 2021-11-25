@@ -5,16 +5,19 @@ import androidx.room.Room
 import com.test.spacedemoapp.data.repositories.LocalRoverPhotosDataStore
 import com.test.spacedemoapp.data.repositories.LocalRoverPhotosDataStoreImpl
 import com.test.spacedemoapp.domain.db.*
+import dagger.Binds
 import dagger.Module
 import dagger.Provides
+import dagger.hilt.InstallIn
+import dagger.hilt.components.SingletonComponent
 import javax.inject.Singleton
 
+@InstallIn(SingletonComponent::class)
 @Module
 object DataBaseModule {
 
-    @JvmStatic
-    @Singleton
     @Provides
+    @Singleton
     fun provideDatabase(application: Application): AppDatabase {
         return Room.databaseBuilder(application, AppDatabase::class.java, "database")
             .addTypeConverter(CameraConverter())
@@ -24,15 +27,11 @@ object DataBaseModule {
             .build()
     }
 
-    @JvmStatic
-    @Singleton
     @Provides
     fun provideHelperDatabase(appDatabase: AppDatabase): DatabaseHelper {
         return DatabaseHelperImpl(appDatabase)
     }
 
-    @JvmStatic
-    @Singleton
     @Provides
     fun getLocaleRoverPhotosDataStore(dbHelper: DatabaseHelper): LocalRoverPhotosDataStore {
         return LocalRoverPhotosDataStoreImpl(dbHelper)
