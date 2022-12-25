@@ -5,7 +5,6 @@ import android.graphics.Bitmap
 import android.graphics.drawable.BitmapDrawable
 import android.net.Uri
 import android.os.Bundle
-import android.util.Log
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
@@ -14,10 +13,8 @@ import androidx.core.content.FileProvider
 import com.bumptech.glide.Glide
 import com.test.itemdetails.databinding.ActivityDetailsBinding
 import moxy.MvpAppCompatActivity
-import moxy.presenter.ProvidePresenter
 import java.io.File
 import java.io.FileOutputStream
-
 
 class DetailsActivity: MvpAppCompatActivity(), DetailsActivityView {
 

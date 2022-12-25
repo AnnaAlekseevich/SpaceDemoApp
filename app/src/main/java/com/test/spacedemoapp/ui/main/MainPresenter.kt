@@ -2,15 +2,14 @@ package com.test.spacedemoapp.ui.main
 
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
-import androidx.paging.rxjava2.cachedIn
-import androidx.paging.rxjava2.observable
-import com.test.spacedemoapp.data.repositories.GetPhotosRxPagingSource
+import com.test.spacedemoapp.data.repositories.GetPhotosPagingSource
 import com.test.spacedemoapp.data.repositories.RoverPhotosRepository
 import io.reactivex.Observable
-import io.reactivex.android.schedulers.AndroidSchedulers
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.launch
 import moxy.InjectViewState
 import moxy.MvpPresenter
 import javax.inject.Inject
@@ -36,13 +35,18 @@ class MainPresenter @Inject constructor(
             setInternetAvailable(newInternetState)
         }
 
-        Pager(PagingConfig(pageSize = 25)) {
-            GetPhotosRxPagingSource(roverPhotosRepository)
-        }.observable.observeOn(AndroidSchedulers.mainThread()).cachedIn(presenterScope)
-            .subscribe { pagingData ->  //set it to view
-                viewState.hideProgress()
-                viewState.setPagingData(pagingData)
+        val listData =
+            Pager(PagingConfig(pageSize = 25)) {
+                GetPhotosPagingSource(roverPhotosRepository)
             }
+
+        presenterScope.launch {
+            listData.flow.collectLatest {
+                viewState.hideProgress()
+                viewState.setPagingData(it)
+            }
+        }
+
     }
 
     private fun setInternetAvailable(isAvailable: Boolean) {
@@ -53,7 +57,5 @@ class MainPresenter @Inject constructor(
             viewState.resetPhotosList()
         }
         isCurrentInternetState = isAvailable
-
-
     }
 }

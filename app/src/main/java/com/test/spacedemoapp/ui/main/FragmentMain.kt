@@ -53,7 +53,7 @@ class FragmentMain: MvpAppCompatFragment(), MainView {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         binding = FragmentMainBinding.inflate(layoutInflater)
 
         setupPhotoList()

@@ -5,11 +5,11 @@ import io.reactivex.Single
 
 interface RoverPhotosRepository {
 
-    fun getPhotos(
+    suspend fun getPhotos(
         earthDate: String,
         page: Int,
         apiKey: String,
         perPage: Int
-    ): Single<List<RoverPhoto>>
+    ): List<RoverPhoto>
 
 }

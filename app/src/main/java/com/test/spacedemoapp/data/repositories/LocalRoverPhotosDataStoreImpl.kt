@@ -10,21 +10,21 @@ import javax.inject.Singleton
 
 @Singleton
 class LocalRoverPhotosDataStoreImpl @Inject constructor(private val dbHelper: DatabaseHelper): LocalRoverPhotosDataStore {
-    override fun getPhotos(
+    override suspend fun getPhotos(
         earthDate: String,
         offset: Int,
         apiKey: String,
         perPage: Int
-    ): Single<List<RoverPhoto>> {
+    ): List<RoverPhoto> {
         return dbHelper.getPhotos(earthDate, offset, apiKey, perPage)
     }
 
-    override fun deleteAllPhotos(): Completable {
-        return dbHelper.deleteAll().subscribeOn(Schedulers.io())
+    override suspend fun deleteAllPhotos() {
+        return dbHelper.deleteAll()
     }
 
-    override fun insertAllPhotos(list: List<RoverPhoto>): Completable {
-        return dbHelper.insertRoverPhoto(list).subscribeOn(Schedulers.io())
+    override suspend fun insertAllPhotos(list: List<RoverPhoto>) {
+        return dbHelper.insertRoverPhoto(list)
     }
 
 }

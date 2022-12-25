@@ -4,9 +4,9 @@ import com.test.spacedemoapp.domain.models.RoverPhoto
 import io.reactivex.Single
 
 interface RemoteRoverPhotosDataStore {
-    fun getPhotos(
+    suspend fun getPhotos(
         earthDate: String,
         page: Int,
         apiKey: String
-    ): Single<List<RoverPhoto>>
+    ): List<RoverPhoto>
 }

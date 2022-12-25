@@ -5,14 +5,14 @@ import io.reactivex.Completable
 import io.reactivex.Single
 
 interface LocalRoverPhotosDataStore {
-    fun getPhotos(
+    suspend fun getPhotos(
         earthDate: String,
         offset: Int,
         apiKey: String,
         perPage: Int
-    ): Single<List<RoverPhoto>>
+    ): List<RoverPhoto>
 
-    fun deleteAllPhotos(): Completable
+    suspend fun deleteAllPhotos()
 
-    fun insertAllPhotos(list: List<RoverPhoto>): Completable
+    suspend fun insertAllPhotos(list: List<RoverPhoto>)
 }

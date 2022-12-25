@@ -11,11 +11,11 @@ import io.reactivex.Single
 @Dao
 interface RoverPhotoDao {
     @Query("SELECT * FROM roverPhoto ORDER BY dbSortPage ASC  LIMIT :perPage OFFSET :offset ")
-    fun getRoverPhoto(perPage: Int, offset: Int): Single<List<RoverPhoto>>
+    suspend fun getRoverPhoto(perPage: Int, offset: Int): List<RoverPhoto>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insertRoverPhoto(roverPhotoList: List<RoverPhoto>): Completable
+    suspend fun insertRoverPhoto(roverPhotoList: List<RoverPhoto>)
 
     @Query("DELETE FROM roverPhoto")
-    fun deleteAll(): Completable
+    suspend fun deleteAll()
 }

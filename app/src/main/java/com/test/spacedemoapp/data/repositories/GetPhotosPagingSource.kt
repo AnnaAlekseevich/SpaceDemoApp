@@ -1,5 +1,6 @@
 package com.test.spacedemoapp.data.repositories
 
+import androidx.paging.PagingSource
 import androidx.paging.PagingState
 import androidx.paging.rxjava2.RxPagingSource
 import com.test.spacedemoapp.domain.models.RoverPhoto
@@ -9,24 +10,9 @@ import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class GetPhotosRxPagingSource @Inject constructor(
+class GetPhotosPagingSource @Inject constructor(
     private val repository: RoverPhotosRepository,
-) : RxPagingSource<Int, RoverPhoto>() {
-
-    override fun loadSingle(params: LoadParams<Int>): Single<LoadResult<Int, RoverPhoto>> {
-        val currentLoadingPageKey = params.key ?: 1
-        return repository.getPhotos(
-            earthDate = "2021-10-30",
-            page = currentLoadingPageKey,
-            apiKey = "gNsHlfPRJY7iFwXdTsIzdNNO7YyPipOIg79CFjK1",
-            perPage = 25
-        )
-            .subscribeOn(Schedulers.io())
-            .map { toLoadResult(it, currentLoadingPageKey) }
-            .onErrorReturn {
-                LoadResult.Error(it)
-            }
-    }
+) : PagingSource<Int, RoverPhoto>() {
 
     private fun toLoadResult(
         data: List<RoverPhoto>,
@@ -48,6 +34,19 @@ class GetPhotosRxPagingSource @Inject constructor(
 
     override fun getRefreshKey(state: PagingState<Int, RoverPhoto>): Int? {
         return state.anchorPosition
+    }
+
+    override suspend fun load(params: LoadParams<Int>): LoadResult<Int, RoverPhoto> {
+        val currentLoadingPageKey = params.key ?: 1
+        return toLoadResult(
+            repository.getPhotos(
+                earthDate = "2021-10-30",
+                page = currentLoadingPageKey,
+                apiKey = "gNsHlfPRJY7iFwXdTsIzdNNO7YyPipOIg79CFjK1",
+                perPage = 25,
+            ),
+            currentLoadingPageKey
+        )
     }
 
 }

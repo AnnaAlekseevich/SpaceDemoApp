@@ -23,20 +23,17 @@ class RoverPhotosRepositoryImpl @Inject constructor(
         }
     }
 
-    override fun getPhotos(
+    override suspend fun getPhotos(
         earthDate: String,
         page: Int,
         apiKey: String,
         perPage: Int
-    ): Single<List<RoverPhoto>> {
+    ): List<RoverPhoto> {
         return if (isInternetAvailable) {
-            remoteRoverPhotosDataStore.getPhotos(earthDate, page, apiKey).flatMap {
-                it.forEach { photo -> photo.dbSortPage = page }
-                val dataList = it
-                return@flatMap insertRoverPhotosFromApiToBD(it).andThen(
-                    Single.just(it)
-                ).onErrorReturn { return@onErrorReturn dataList }
-            }
+            val listRoverPhoto = remoteRoverPhotosDataStore.getPhotos(earthDate, page, apiKey)
+            listRoverPhoto.forEach{it.dbSortPage=page}
+            insertRoverPhotosFromApiToBD(listRoverPhoto)
+            listRoverPhoto
         } else {
             val offset = (page - 1) * perPage
             localRoverPhotosDataStore.getPhotos(
@@ -48,7 +45,7 @@ class RoverPhotosRepositoryImpl @Inject constructor(
         }
     }
 
-    private fun insertRoverPhotosFromApiToBD(roverPhotoList: List<RoverPhoto>) =
+    private suspend fun insertRoverPhotosFromApiToBD(roverPhotoList: List<RoverPhoto>) =
         localRoverPhotosDataStore.insertAllPhotos(roverPhotoList)
 
 }

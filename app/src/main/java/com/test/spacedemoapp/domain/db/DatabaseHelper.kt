@@ -5,7 +5,7 @@ import io.reactivex.Completable
 import io.reactivex.Single
 
 interface DatabaseHelper {
-    fun getPhotos(earthDate: String, offset: Int, apiKey: String, perPage: Int): Single<List<RoverPhoto>>
-    fun insertRoverPhoto(roverPhotoList: List<RoverPhoto>): Completable
-    fun deleteAll(): Completable
+    suspend fun getPhotos(earthDate: String, offset: Int, apiKey: String, perPage: Int): List<RoverPhoto>
+    suspend fun insertRoverPhoto(roverPhotoList: List<RoverPhoto>)//: Completable
+    suspend fun deleteAll()//: Completable
 }

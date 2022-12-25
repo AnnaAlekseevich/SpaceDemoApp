@@ -13,7 +13,7 @@ class ItemDecorationColumns(val spanCount: Int, val spacing: Int, val includeEdg
         parent: RecyclerView,
         state: RecyclerView.State
     ) {
-        val position = parent.getChildAdapterPosition(view!!) // item position
+        val position = parent.getChildAdapterPosition(view) // item position
         val column = position % spanCount // item column
         if (includeEdge) {
             outRect.left =
