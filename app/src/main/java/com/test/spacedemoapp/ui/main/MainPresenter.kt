@@ -5,11 +5,8 @@ import androidx.paging.PagingConfig
 import com.test.spacedemoapp.data.repositories.GetPhotosPagingSource
 import com.test.spacedemoapp.data.repositories.RoverPhotosRepository
 import io.reactivex.Observable
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.SupervisorJob
+import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.collectLatest
-import kotlinx.coroutines.launch
 import moxy.InjectViewState
 import moxy.MvpPresenter
 import javax.inject.Inject
@@ -47,6 +44,11 @@ class MainPresenter @Inject constructor(
             }
         }
 
+    }
+
+    override fun detachView(view: MainView?) {
+        presenterScope.coroutineContext.cancelChildren()
+        super.detachView(view)
     }
 
     private fun setInternetAvailable(isAvailable: Boolean) {
